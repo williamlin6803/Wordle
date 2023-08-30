@@ -1,5 +1,3 @@
-/* hw3-main.c */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -12,6 +10,22 @@ char ** words;
 
 int wordle_server( int argc, char ** argv );
 
+void print_global_variables() {
+    printf("Total guesses: %d\n", total_guesses);
+    printf("Total wins: %d\n", total_wins);
+    printf("Total losses: %d\n", total_losses);
+    
+    printf("Words: ");
+    if (words) {
+        for (char **ptr = words; *ptr; ptr++) {
+            printf("%s ", *ptr);
+        }
+    } else {
+        printf("NULL");
+    }
+    printf("\n");
+}
+
 int main( int argc, char ** argv )
 {
   total_guesses = total_wins = total_losses = 0;
@@ -20,6 +34,7 @@ int main( int argc, char ** argv )
 
   int rc = wordle_server( argc, argv );
 
+  print_global_variables();
   for ( char ** ptr = words ; *ptr ; ptr++ )
   {
     free( *ptr );

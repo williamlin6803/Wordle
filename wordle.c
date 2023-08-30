@@ -59,7 +59,7 @@ void destroy_mutexes(){
     pthread_mutex_destroy(&server_sock_lock);
 }
 
-void load_inital_data(char* word_file, int seed, int port) {
+void load_inital_data(char* word_file, int port) {
     total_guesses = total_wins = total_losses = stop_server = 0;
     clients = (client**)calloc(MAX_CLIENTS, sizeof(client*));
     free(words);
@@ -76,7 +76,6 @@ void load_inital_data(char* word_file, int seed, int port) {
     close(fd);
 
     printf("MAIN: opened %s (%d words)\n", word_file, num_valid_dictionary_words);
-    printf("MAIN: seeded pseudo-random number generator with %d\n", seed);
     printf("MAIN: Wordle server listening on port {%d}\n", port);
 }
 
@@ -285,19 +284,16 @@ void handle_signals(){
 }
 
 int wordle_server(int argc, char **argv) {
-    setvbuf(stdout, NULL, _IONBF, 0);
-    if (argc != 5) { fprintf(stderr, "Invalid argument(s)\n"); return EXIT_FAILURE; }
+    if (argc != 4) { fprintf(stderr, "Invalid argument(s)\n"); return EXIT_FAILURE; }
 
     int port = atoi(*(argv + 1));
-    int seed = atoi(*(argv + 2));
-    char* word_file = *(argv + 3);
-    num_valid_dictionary_words = atoi(*(argv + 4));
+    char* word_file = *(argv + 2);
+    num_valid_dictionary_words = atoi(*(argv + 3));
     
-    srand(seed);
     handle_signals();
     server_sock = setup_server(port);
 
-    load_inital_data(word_file, seed, port);
+    load_inital_data(word_file, port);
 
     while (!stop_server) {
         struct sockaddr_in client_addr;
