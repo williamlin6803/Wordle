@@ -29,7 +29,10 @@ kill -USR1 PIDID        Note: Subsitute PIDID with the actual process ID found b
 ```
 
 Command to Run Wordle Server locally:
-1. Clone the repo: git clone https://github.com/williamlin6803/Wordle.git
+1. Clone the repo:
+```
+git clone https://github.com/williamlin6803/Wordle.git
+```
 2. Navigate to the cloned repo on your local machine
 3. Open up two terminals
 4. Compile and run the server in the first terminal by doing:
