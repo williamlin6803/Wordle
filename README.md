@@ -1,4 +1,4 @@
-# Wordle as seen on https://www.nytimes.com/games/wordle
+# Wordle as seen on www.nytimes.com/games/wordle
 
 
 High Level Overview: 
@@ -9,12 +9,12 @@ on the port number specified as a command-line argument. For each connection req
 to handle that specific connection. Once a connection is accepted, the client sends a five-byte packet containing a guess, e.g., "ready";
 the guessed word can be a mix of uppercase and lowercase letters, as case does not matter. The server replies with an eight-byte packet that 
 is formatted as follows:
-
-              +-----+-----+-----+-----+-----+-----+-----+-----+
-SERVER REPLY: |valid| guesses   |           result            |
-              |guess| remaining |                             |
-              +-----+-----+-----+-----+-----+-----+-----+-----+
-              
+```
+                  +-----+-----+-----+-----+-----+-----+-----+-----+
+SERVER REPLY:     |valid| guesses   |           result            |
+                  |guess| remaining |                             |
+                  +-----+-----+-----+-----+-----+-----+-----+-----+
+```              
 The valid guess field is a one-byte char value that is either 'Y' (yes) or 'N' (no).
 The guesses remaining field is a two-byte short value that indicates how many guesses the client has left, which starts at 6.
 The result field is a five-byte character string that corresponds to the client’s guess. If a guess is not valid word, simply send "?????"; 
